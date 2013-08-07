@@ -5,7 +5,7 @@ ZS.Views = ZS.Views || {};
 ZS.Views.Options = function() {
     var self = this;
     self.elm = $("<div/>");
-    var optionsTemplate = Handlebars.compile($('#optionsTemplate').html());
+//    var optionsTemplate = Handlebars.compile($('#optionsTemplate').html());
     //bind events. 
     self.elm.on('click', '#btnSaveOptions', function() {
         ZS.Common.Options.option.StorageLocation = $('#sltLocalStore').val();
@@ -50,7 +50,8 @@ ZS.Views.Options = function() {
     return {
         Render: function () {
             var dfd = $.Deferred();
-            self.elm.html(optionsTemplate(ZS.Common.Options.option));
+            self.elm.html(ZS.Templates.optionsTemplate(ZS.Common.Options.option));
+//            self.elm.html(optionsTemplate(ZS.Common.Options.option));
             dfd.resolveWith(self, [self.elm]);
             return dfd.promise();
         }

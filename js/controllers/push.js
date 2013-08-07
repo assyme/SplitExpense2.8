@@ -3,7 +3,7 @@
 var ZS = ZS || {};
 
 ZS.PushNotification =  (function(){
-	console.log("initilizing push notification class");
+
 	var self = this;
 	self.notification;
 	var tokenHandler = function(token){
@@ -21,12 +21,14 @@ ZS.PushNotification =  (function(){
 	}
 
 	return {	
-		init : function(currentUser){
+		init : function(){
 			//contructor
 			console.log("initilizing ios push notifications"); 
-			
+            if (typeof window.plugins == "undefined") {
+                return;
+            }
 			self.notification = window.plugins.pushNotification;
-			
+		
 			self.notification.register(tokenHandler,errorHandler,
 			 {"badge" : true,"sound" : true,"alert" : true, "ecb": "ZS.PushNotification.onNotificationAPN" /* This cannot be changed ever */}); 
 		},
@@ -49,7 +51,7 @@ ZS.PushNotification =  (function(){
     		}
 
     		if (event.badge) {
-        		pushNotification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
+        		self.notification.setApplicationIconBadgeNumber(successHandler, errorHandler, event.badge);
     		}
     		//TODO : Pull the new data from server. 
 		}

@@ -4,8 +4,8 @@ ZS.Communication = ZS.Communication || {};
 
 ZS.Communication.UserExpenses = function() {
     var self = this;
-    //var rooturl = "http://splitexpense.apphb.com/";
-    var rooturl = "http://pu-sdapalek.zs.local/ExpenseManager/";
+    var rooturl = "http://ev-qa.zs.local/ICFV/0026PhoneGapPoC/Web/";
+    //var rooturl = "http://pu-sdapalek.zs.local/SplitExpense/Web/";
 
     $(document).ajaxSend(function(event,request,settings) {
         request.setRequestHeader("Requested-With", "XMLHttpRequest");

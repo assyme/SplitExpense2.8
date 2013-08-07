@@ -7,23 +7,33 @@ ZS.MainApp = new function () {
     // Application Constructor
     this.initialize = function () {
         console.log("binding device ready events");
-        document.addEventListener("deviceready", self.onDeviceReady, true);
-        
-    };
+        var iOS = (navigator.userAgent.match(/(iPad|iPhone)/g) ? true : false);
+        if (iOS) {
+            document.addEventListener("deviceready", self.onDeviceReady, true);
+            document.addEventListener("online", self.onOnline, true);
+            document.addEventListener("offline", self.onOffline, true);
 
-    self.onOnline = function(){
+        } else {
+            $(document).ready(function () {
+                self.onDeviceReady();
+            });
+        }
+
+    };
+    
+    self.onOnline = function () {
         console.log("App is online");
-        ZS.Communication.UserExpenses.IsAlive().done(function(){
+        ZS.Communication.UserExpenses.IsAlive().done(function () {
             ZS.Common.Online = true;
-        }).fail(function(){
+        }).fail(function () {
             ZS.Common.Online = false;
         });
     };
 
-    self.onOffline = function(){
+    self.onOffline = function() {
         console.log("application is offline");
         ZS.Common.Online = false;
-    }
+    };
 
     var fetchNewDataFromServer = function () {
         if (ZS.Common.Online) {
@@ -46,9 +56,6 @@ ZS.MainApp = new function () {
 
         //window.navigator.notification.alert("Device Ready");
         console.log("application is ready");
-        console.log(typeof ZS.PushNotification);
-        document.addEventListener("online",self.onOnline,true);
-        document.addEventListener("offline",self.onOffline,true);
 
         //Load Commons
         ZS.Common.Options = new ZS.Model.Options();
@@ -92,8 +99,6 @@ ZS.MainApp = new function () {
 
 
         $('li#navAuth').on('click', function () {
-            //var oldLocation = window.location;
-            //window.location = "http://splitexpense.apphb.com/Account/Login?ReturnUrl=" + oldLocation;
             var view = new ZS.Views.AuthView();
             view.Render().done(function () {
                 $('div#contents').html(this.elm);

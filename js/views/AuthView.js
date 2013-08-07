@@ -63,7 +63,7 @@ ZS.Views.AuthView = function () {
         var dfd = $.Deferred();
         var credmodel = new ZS.Model.Credential();
         credmodel.Load().done(function (creds) {
-            var htmlContent = ZS.Views.AuthView.template(creds);
+            var htmlContent = ZS.Templates.authTemplate(creds);//ZS.Views.AuthView.template(creds);
             self.elm.html(htmlContent);
 
             dfd.resolveWith(self, [self.elm]);
@@ -77,4 +77,4 @@ ZS.Views.AuthView = function () {
     this.Initialize();
 };
 
-ZS.Views.AuthView.template = Handlebars.compile($('#authTemplate').html());
+//ZS.Views.AuthView.template = Handlebars.compile($('#authTemplate').html());
